@@ -10,7 +10,7 @@ locals {
 # AWS ALB Grafana - Service RequestCount/TargetResponseTime
 ###########################################################
 module "grafana_ecs_service_request_response" {
-  source = "git::https://github.com/synapsestudios/terraform-grafana-panel-graph.git?ref=import"
+  source = "git::https://github.com/synapsestudios/terraform-grafana-panel-graph.git?ref=release/v1.0.0"
 
   title            = "${local.name} RequestCount / TargetResponseTime"
   series_overrides = [{ alias = "Response Time", yaxis = 2 }]
@@ -44,7 +44,7 @@ module "grafana_ecs_service_request_response" {
 # AWS ALB Grafana - ECS Service CPU Utilization
 ################################################
 module "grafana_ecs_service_cpu_utilization" {
-  source = "git::https://github.com/synapsestudios/terraform-grafana-panel-graph.git?ref=import"
+  source = "git::https://github.com/synapsestudios/terraform-grafana-panel-graph.git?ref=release/v1.0.0"
 
   title    = "${local.name} CPU Utilization"
   interval = "1m"
@@ -72,7 +72,7 @@ module "grafana_ecs_service_cpu_utilization" {
 # AWS ALB Grafana - ECS Service Memory Utilization
 ##################################################
 module "grafana_ecs_service_memory_utilization" {
-  source = "git::https://github.com/synapsestudios/terraform-grafana-panel-graph.git?ref=import"
+  source = "git::https://github.com/synapsestudios/terraform-grafana-panel-graph.git?ref=release/v1.0.0"
 
   title    = "${local.name} Memory Utilization"
   interval = "1m"
