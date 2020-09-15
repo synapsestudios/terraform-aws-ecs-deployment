@@ -1,13 +1,13 @@
 # AWS ECS Deployment Spinnaker Compatible (Fargate)
 
-This module creates an ECS Fargate deployment that is compatible with Spinnaker's naming conventions.
+This module creates an ECS Fargate deployment that is compatible with Spinnaker's [naming conventions](https://docs.armory.io/docs/overview/naming-conventions/#spinnaker-naming-conventions) and is intended to be used with [synapsestudios/terraform-aws-ecs-fargate-stack](https://github.com/synapsestudios/terraform-aws-ecs-fargate-stack)
 
 <!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 ## Requirements
 
 | Name | Version |
 |------|---------|
-| terraform | ~> 0.12.6 |
+| terraform | ~> 0.12.29 |
 | aws | ~> 2.53 |
 
 ## Providers
