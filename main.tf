@@ -240,9 +240,9 @@ resource "aws_lb_listener_rule" "this" {
 # ALB - Target Groups
 #####################
 resource "aws_lb_target_group" "this" {
-  count = var.use_load_balancer == true ? 1 : 0
+  count = var.use_load_balancer == true ? 2 : 0
 
-  name        = var.alb_target_group_name == null ? "${var.cluster_name}-${var.name}" : var.alb_target_group_name
+  name        = var.alb_target_group_name == null ? "${var.cluster_name}-${var.name}${count.index}" : var.alb_target_group_name
   port        = 80
   protocol    = var.alb_protocol
   target_type = "ip"
