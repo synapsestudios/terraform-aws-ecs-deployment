@@ -61,12 +61,4 @@ This module creates an ECS Fargate deployment that is compatible with Spinnaker'
 | task\_role | IAM role that allows your Amazon ECS container task to make calls to other AWS services. | `string` | `"role/ecsTaskExecutionRole"` | no |
 | use\_load\_balancer | If true, this service will be bound to the load balancer. | `bool` | `true` | no |
 
-## Outputs
-
-| Name | Description |
-|------|-------------|
-| grafana\_ecs\_service\_cpu\_utilization | Grafan Panel for ECS Service CPU Utilization. |
-| grafana\_ecs\_service\_memory\_utilization | Grafan Panel for ECS Service CPU Utilization. |
-| grafana\_ecs\_service\_request\_response | Grafan Panel for ECS Service RequestCount / TargetResponseTime. |
-
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
