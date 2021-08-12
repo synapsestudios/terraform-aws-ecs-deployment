@@ -20,6 +20,10 @@ data "aws_caller_identity" "current" {}
 ####################
 data "aws_region" "current" {}
 
+data "aws_ecs_task_definition" "this" {
+  task_definition = aws_ecs_task_definition.this.family
+}
+
 #######################################
 # AWS Route53 Zone for this environment
 #######################################
@@ -91,7 +95,7 @@ resource "aws_ecs_service" "managed" {
   name             = var.service_name != null ? var.service_name : "${var.cluster_name}-${var.name}"
   launch_type      = "FARGATE"
   cluster          = var.ecs_cluster_arn
-  task_definition  = aws_ecs_task_definition.this.arn
+  task_definition = "arn:aws:ecs:${data.aws_region.current}:${data.aws_caller_identity.current.account_id}:task-definition/${aws_ecs_task_definition.this.family}:${max(aws_ecs_task_definition.this.revision, data.aws_ecs_task_definition.this.revision)}"
   desired_count    = var.min_capacity
   platform_version = var.platform_version
 
@@ -135,7 +139,7 @@ resource "aws_ecs_service" "un_managed" {
   name             = var.service_name != null ? var.service_name : "${var.cluster_name}-${var.name}"
   launch_type      = "FARGATE"
   cluster          = var.ecs_cluster_arn
-  task_definition  = aws_ecs_task_definition.this.arn
+  task_definition = "arn:aws:ecs:${data.aws_region.current.id}:${data.aws_caller_identity.current.account_id}:task-definition/${aws_ecs_task_definition.this.family}:${max(aws_ecs_task_definition.this.revision, data.aws_ecs_task_definition.this.revision)}"
   desired_count    = var.min_capacity
   platform_version = var.platform_version
 
