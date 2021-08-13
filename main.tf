@@ -99,6 +99,10 @@ resource "aws_ecs_service" "managed" {
   desired_count    = var.min_capacity
   platform_version = var.platform_version
 
+  deployment_controller {
+    type = "CODE_DEPLOY"
+  }
+
   # TODO opt in is required for adding tags here
   # See: https://us-west-2.console.aws.amazon.com/ecs/home?region=us-west-2#/settings
   # tags            = var.tags
@@ -142,6 +146,10 @@ resource "aws_ecs_service" "un_managed" {
   task_definition = "arn:aws:ecs:${data.aws_region.current.id}:${data.aws_caller_identity.current.account_id}:task-definition/${aws_ecs_task_definition.this.family}:${max(aws_ecs_task_definition.this.revision, data.aws_ecs_task_definition.this.revision)}"
   desired_count    = var.min_capacity
   platform_version = var.platform_version
+
+  deployment_controller {
+    type = "CODE_DEPLOY"
+  }
 
   # TODO opt in is required for adding tags here
   # See: https://us-west-2.console.aws.amazon.com/ecs/home?region=us-west-2#/settings
