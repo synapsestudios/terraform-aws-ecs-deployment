@@ -181,7 +181,7 @@ resource "aws_ecs_service" "un_managed" {
 
   # This allows dynamic scaling and external deployments
   lifecycle {
-    ignore_changes = [desired_count, task_definition]
+    ignore_changes = [desired_count, task_definition, load_balancer]
   }
 }
 
@@ -227,6 +227,10 @@ resource "aws_lb_listener_rule" "this" {
   action {
     type             = "forward"
     target_group_arn = aws_lb_target_group.this[0].arn
+  }
+
+  lifecycle {
+    ignore_changes = [ action[0].target_group_arn ]
   }
 
   condition {
