@@ -181,7 +181,7 @@ resource "aws_ecs_service" "un_managed" {
 
   # This allows dynamic scaling and external deployments
   lifecycle {
-    ignore_changes = [desired_count, task_definition, load_balancer]
+    ignore_changes = [desired_count, task_definition]
   }
 }
 
@@ -227,10 +227,6 @@ resource "aws_lb_listener_rule" "this" {
   action {
     type             = "forward"
     target_group_arn = aws_lb_target_group.this[0].arn
-  }
-
-  lifecycle {
-    ignore_changes = [ action[0].target_group_arn ]
   }
 
   condition {
@@ -286,16 +282,6 @@ resource "aws_lb_target_group" "this" {
   lifecycle {
      create_before_destroy = true
   }
-}
-
-####################################
-# CloudWatch - Application Log Group
-####################################
-resource "aws_cloudwatch_log_group" "this" {
-  count = length(jsondecode(var.container_definitions))
-
-  name = jsondecode(var.container_definitions)[count.index].logConfiguration.options.awslogs-group
-  tags = var.tags
 }
 
 ########################
