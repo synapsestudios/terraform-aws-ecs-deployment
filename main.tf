@@ -100,7 +100,7 @@ resource "aws_ecs_service" "managed" {
   platform_version = var.platform_version
 
   deployment_controller {
-    type = "CODE_DEPLOY"
+    type = var.code_deploy = true ? "CODE_DEPLOY" : "ECS"
   }
 
   # TODO opt in is required for adding tags here
@@ -146,9 +146,9 @@ resource "aws_ecs_service" "un_managed" {
   task_definition = "arn:aws:ecs:${data.aws_region.current.id}:${data.aws_caller_identity.current.account_id}:task-definition/${aws_ecs_task_definition.this.family}:${max(aws_ecs_task_definition.this.revision, data.aws_ecs_task_definition.this.revision)}"
   desired_count    = var.min_capacity
   platform_version = var.platform_version
-
+  
   deployment_controller {
-    type = "CODE_DEPLOY"
+    type = var.code_deploy = true ? "CODE_DEPLOY" : "ECS"
   }
 
   # TODO opt in is required for adding tags here
@@ -181,7 +181,7 @@ resource "aws_ecs_service" "un_managed" {
 
   # This allows dynamic scaling and external deployments
   lifecycle {
-    ignore_changes = [desired_count, task_definition]
+    ignore_changes = [desired_count, task_definition, load_balancer]
   }
 }
 
@@ -227,6 +227,10 @@ resource "aws_lb_listener_rule" "this" {
   action {
     type             = "forward"
     target_group_arn = aws_lb_target_group.this[0].arn
+  }
+
+  lifecycle {
+    ignore_changes = [ action[0].target_group_arn ]
   }
 
   condition {
