@@ -90,6 +90,12 @@ variable "public_ip" {
   default     = false
 }
 
+variable "code_deploy" {
+  type        = bool
+  description = "turn off codedeploy"
+  default     = true
+}
+
 variable "container_definitions" {
   type        = string
   description = "JSON Represention of the Docker definitions"
