@@ -100,7 +100,7 @@ resource "aws_ecs_service" "managed" {
   platform_version = var.platform_version
 
   deployment_controller {
-    type = var.code_deploy = true ? "CODE_DEPLOY" : "ECS"
+    type = var.code_deploy == true ? "CODE_DEPLOY" : "ECS"
   }
 
   # TODO opt in is required for adding tags here
@@ -148,7 +148,7 @@ resource "aws_ecs_service" "un_managed" {
   platform_version = var.platform_version
   
   deployment_controller {
-    type = var.code_deploy = true ? "CODE_DEPLOY" : "ECS"
+    type = var.code_deploy == true ? "CODE_DEPLOY" : "ECS"
   }
 
   # TODO opt in is required for adding tags here
