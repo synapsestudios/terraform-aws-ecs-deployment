@@ -113,8 +113,10 @@ variable "alb_protocol" {
   default     = "HTTP"
 }
 
-# No type as this accepts strings and numbers
+# A string type still accepts numbers. Terraform converts 8080 to "8080",
+# which is the type the target group health check port uses.
 variable "alb_health_check_port" {
+  type        = string
   description = "The port to use for connections from the ALB to the deployment. Valid values are either ports 1-65535, or traffic-port"
   default     = "traffic-port"
 }
